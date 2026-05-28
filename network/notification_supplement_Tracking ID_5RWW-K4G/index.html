@@ -14,7 +14,7 @@
 <meta property="og:description" content="こんにちは、Azure テクニカル サポート チームです。2026 年 05 月 24 日に Intel D および E-v5 シリーズおよび Cobalt 100 D および E-v6 シリーズ VM に対して Microsoft Azure Network Adapter (MANA) ハードウェアとの OS 互換性の確認に関するアナウンスがされました。(Tracking ID: 5RWW-K">
 <meta property="og:locale" content="ja_JP">
 <meta property="article:published_time" content="2026-05-26T03:00:00.000Z">
-<meta property="article:modified_time" content="2026-05-28T04:33:15.647Z">
+<meta property="article:modified_time" content="2026-05-28T04:35:19.822Z">
 <meta property="article:author" content="Japan Azure IaaS Core Support Team">
 <meta property="article:tag" content="Network">
 <meta name="twitter:card" content="summary">
@@ -102,7 +102,7 @@
         
         <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+fcd299e6-45b3-5d59-a3d8-062b1ea9fb59%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5BTracking+ID_5RWW-K4G+%E3%81%AE%E9%80%9A%E7%9F%A5%E3%81%AB%E9%96%A2%E3%81%99%E3%82%8B%E3%82%A2%E3%83%8A%E3%82%A6%E3%83%B3%E3%82%B9%E3%81%AE%E8%A3%9C%E8%B6%B3%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fnetwork%2Fnotification_supplement_Tracking%2520ID_5RWW-K4G%2F%29%0A*+Content+Source%3A+%5Barticles%2Fnetwork%2Fnotification_supplement_Tracking+ID_5RWW-K4G.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fnetwork%2Fnotification_supplement_Tracking%2520ID_5RWW-K4G.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
         
-        <a data-url="https://jpaztech.github.io/blog/network/notification_supplement_Tracking%20ID_5RWW-K4G/" data-id="cuid1X_HX8suehslWSeabY9Sf" class="article-share-link">共有</a>
+        <a data-url="https://jpaztech.github.io/blog/network/notification_supplement_Tracking%20ID_5RWW-K4G/" data-id="cuidHjiKWx8Eirza55D8qG5n1" class="article-share-link">共有</a>
       </div>
     
     <div class="article-entry" itemprop="articleBody">
@@ -182,20 +182,6 @@
 <h3 id="ステップ-5-期限までのアップグレード"><a href="#ステップ-5-期限までのアップグレード" class="headerlink" title="ステップ 5: 期限までのアップグレード"></a>ステップ 5: 期限までのアップグレード</h3><p>リソース タグによる除外措置を行っている場合、<strong>2027 年 05 月 31 日までに</strong> MANA 対応の OS または NVA 製品へのアップグレードを完了してください。この日以降、すべての VM が MANA 対応ハードウェアに配置される可能性があります。</p>
 <h2 id="LegacyVMNVA-タグの適用方法"><a href="#LegacyVMNVA-タグの適用方法" class="headerlink" title="LegacyVMNVA タグの適用方法"></a>LegacyVMNVA タグの適用方法</h2><p>NVA ワークロードを実行している VM に対して <code>LegacyVMNVA</code> タグを適用することで、一時的に MANA ハードウェアへの配置を除外できます。<br><code>LegacyVMNVA</code> タグを任意のスコープに設定する組み込みの Azure ポリシーが用意されておりますので、こちらをご利用ください。</p>
 <p><a href="https://learn.microsoft.com/ja-jp/azure/virtual-network/accelerated-networking-mana-network-virtual-appliance-opt-out#temporary-mana-exception-with-legacyvmnva">一時的な MANA 例外 LegacyVMNVA</a></p>
-<p>手動でリソース タグを設定いただく場合、以下の手順となります。</p>
-<p>Azure CLI の場合</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">az vm update --resource-group <span class="string">&quot;リソースグループ名&quot;</span> --name <span class="string">&quot;VM 名&quot;</span> --<span class="built_in">set</span> tags.LegacyVMNVA=<span class="literal">true</span></span><br></pre></td></tr></table></figure>
-
-<p>Azure PowerShell の場合</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$vm</span> = <span class="built_in">Get-AzVM</span> <span class="literal">-ResourceGroupName</span> <span class="string">&quot;リソースグループ名&quot;</span> <span class="literal">-Name</span> <span class="string">&quot;VM 名&quot;</span></span><br><span class="line"><span class="variable">$vm</span>.Tags[<span class="string">&quot;LegacyVMNVA&quot;</span>] = <span class="string">&quot;true&quot;</span></span><br><span class="line"><span class="built_in">Update-AzVM</span> <span class="literal">-ResourceGroupName</span> <span class="string">&quot;リソースグループ名&quot;</span> <span class="literal">-VM</span> <span class="variable">$vm</span></span><br></pre></td></tr></table></figure>
-
-<p>Azure ポータルの場合</p>
-<ol>
-<li>Azure ポータルで対象の VM リソースに移動します。</li>
-<li>左側のメニューから <strong>[タグ]</strong> を選択します。</li>
-<li>名前に <code>LegacyVMNVA</code>、値に <code>true</code> を入力します。</li>
-<li><strong>[保存]</strong> をクリックします。</li>
-</ol>
 <h2 id="対応フローチャート"><a href="#対応フローチャート" class="headerlink" title="対応フローチャート"></a>対応フローチャート</h2><p>以下のフローチャートで、お客様の環境に必要な対応を確認できます。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">対象 VM シリーズ (Intel E-v5 / Cobalt 100 D E-v6) を使用している</span><br><span class="line">  │</span><br><span class="line">  ├─ 高速ネットワークを使用していない → 対応不要</span><br><span class="line">  │</span><br><span class="line">  ├─ Windows OS を使用している → 対応不要</span><br><span class="line">  │</span><br><span class="line">  └─ 高速ネットワーク + Linux OS を使用している</span><br><span class="line">      │</span><br><span class="line">      ├─ NVA ワークロードではない → ※ Linux OS が MANA 対応であることを確認の上、必要に応じてカーネルの更新</span><br><span class="line">      └─ NVA ワークロードである</span><br><span class="line">          │</span><br><span class="line">          ├─ OS が MANA 互換 → 対応不要</span><br><span class="line">          │</span><br><span class="line">          └─ OS が MANA 非互換</span><br><span class="line">              │</span><br><span class="line">              ├─ すぐにアップグレード可能 → MANA 対応 OS/NVA にアップグレード</span><br><span class="line">              │</span><br><span class="line">              └─ 時間が必要 → LegacyVMNVA タグを適用 → 2027 年 05 月 31 日までにアップグレード</span><br></pre></td></tr></table></figure>
 
